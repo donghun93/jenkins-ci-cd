@@ -19,39 +19,23 @@ pipeline {
           }
         }
 
-//         // gradle build
-//         stage('Bulid Gradle') {
-//           agent any
-//           steps {
-//             echo 'Bulid Gradle'
-//             dir ('.'){
-//                 sh """
-//                  ./gradlew clean build --exclude-task test
-//                 """
-//             }
-//           }
-//           post {
-//             failure {
-//               error 'This pipeline stops here...'
-//             }
-//           }
-//         }
-        stage('build gradle') {
-            steps {
-                sh  './gradlew build'
-
-
-                sh 'ls -al ./build'
+        // gradle build
+        stage('Bulid Gradle') {
+          agent any
+          steps {
+            echo 'Bulid Gradle'
+            dir ('.'){
+                sh "chmod +x gradlew"
+                sh """
+                 ./gradlew clean build --exclude-task test
+                """
             }
-            post {
-                success {
-                    echo 'gradle build success'
-                }
-
-                failure {
-                    echo 'gradle build failed'
-                }
+          }
+          post {
+            failure {
+              error 'This pipeline stops here...'
             }
+          }
         }
 
 
