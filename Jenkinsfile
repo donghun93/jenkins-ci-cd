@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment{
+        registry = 'alswn4516/test'
+        registryCredential = 'alswn4516'
+    }
     stages {
         // git에서 repository clone
         stage('Prepare') {
@@ -38,14 +42,56 @@ pipeline {
           }
         }
 
-       stage('========== Build image ==========') {
-          app = docker.build("alswn4516/test")
-        }
-        stage('========== Push image ==========') {
-          docker.withRegistry('https://registry.hub.docker.com', 'alswn4516') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
-          }
-        }
+//         // docker build
+//         stage('Bulid Docker') {
+//           agent any
+//           steps {
+//             echo 'Bulid Docker'
+//             script {
+//                 dockerImage = docker.build imagename
+//             }
+//           }
+//           post {
+//             failure {
+//               error 'This pipeline stops here...'
+//             }
+//           }
+//         }
+//
+//         // docker push
+//         stage('Push Docker') {
+//           agent any
+//           steps {
+//             echo 'Push Docker'
+//             script {
+//                 docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+//                     dockerImage.push("1.0")  // ex) "1.0"
+//                 }
+//             }
+//           }
+//           post {
+//             failure {
+//               error 'This pipeline stops here...'
+//             }
+//           }
+//         }
+
+            stages{
+               stage('Building image') {
+              steps{
+                script {
+                  dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+              }
+            }
+               stage('Deploy Image') {
+              steps{
+                 script {
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push("1.0")
+                  }
+                }
+              }
+            }
     }
 }
