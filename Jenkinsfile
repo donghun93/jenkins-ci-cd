@@ -39,12 +39,12 @@ pipeline {
         }
 
        stage('========== Build image ==========') {
-          app = docker.build("alswn4516/test") # 저장소
+          app = docker.build("alswn4516/test")
         }
         stage('========== Push image ==========') {
           docker.withRegistry('https://registry.hub.docker.com', 'alswn4516') {
-            app.push("${env.BUILD_NUMBER}") # 빌드 번호
-            app.push("latest") # 태그 정보
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
           }
         }
     }
