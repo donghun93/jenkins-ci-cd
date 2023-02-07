@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        imagename = "alswn4516/test"
+        registrycredential = 'alswn4516'
+        dockerimage = ''
+    }
+
     stages {
         // git에서 repository clone
         stage('Prepare') {
@@ -60,7 +66,7 @@ pipeline {
           steps {
             echo 'Push Docker'
             script {
-                docker.withRegistry( '', registryCredential) {
+                docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
                     dockerImage.push("1.0")  // ex) "1.0"
                 }
             }
