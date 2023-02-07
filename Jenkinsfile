@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         imagename = "test"
-        registryCredential = 'github_user_credentials'
+        registryCredential = 'alswn4516'
         dockerImage = ''
     }
 
