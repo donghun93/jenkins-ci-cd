@@ -10,6 +10,7 @@ public class HelloApiController {
 
     @GetMapping
     public String hello() {
+        // test hello
         return "hello";
     }
 }
