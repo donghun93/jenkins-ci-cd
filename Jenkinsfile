@@ -1,12 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        imagename = "alswn4516/test"
-        registrycredential = 'alswn4516'
-        dockerimage = ''
-    }
-
     stages {
         // git에서 repository clone
         stage('Prepare') {
@@ -44,37 +38,13 @@ pipeline {
           }
         }
 
-        // docker build
-        stage('Bulid Docker') {
-          agent any
-          steps {
-            echo 'Bulid Docker'
-            script {
-                dockerImage = docker.build imagename
-            }
-          }
-          post {
-            failure {
-              error 'This pipeline stops here...'
-            }
-          }
+       stage('========== Build image ==========') {
+          app = docker.build("alswn4516/test") # 저장소
         }
-
-        // docker push
-        stage('Push Docker') {
-          agent any
-          steps {
-            echo 'Push Docker'
-            script {
-                docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                    dockerImage.push("1.0")  // ex) "1.0"
-                }
-            }
-          }
-          post {
-            failure {
-              error 'This pipeline stops here...'
-            }
+        stage('========== Push image ==========') {
+          docker.withRegistry('https://registry.hub.docker.com', 'alswn4516') {
+            app.push("${env.BUILD_NUMBER}") # 빌드 번호
+            app.push("latest") # 태그 정보
           }
         }
     }
