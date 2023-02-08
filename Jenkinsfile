@@ -12,6 +12,7 @@ pipeline {
             echo 'Clonning Repository'
             git branch: 'main'
                 url: 'https://github.com/donghun93/jenkins-ci-cd.git',
+                credentialsId: 'github_access_token_credential'
             }
             post {
              success {
