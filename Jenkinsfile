@@ -60,9 +60,9 @@ pipeline {
          stage("Deploy to EC2") {
             steps {
                   sh "$SSH_CMD 'docker pull $repository'"
-                  sh "$SSH_CMD 'docker stop test-container || true'"
-                  sh "$SSH_CMD 'docker rm test-container || true'"
-                  sh "$SSH_CMD 'docker run --name test-container -p 8080:8080 $repository'"
+                  //sh "$SSH_CMD 'docker stop test-container || true'"
+                  //sh "$SSH_CMD 'docker rm test-container || true'"
+                  //sh "$SSH_CMD 'docker run --name test-container -p 8080:8080 $repository'"
             }
          }
     }
