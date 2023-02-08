@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        imagename = "alswn4516/test"
-        registryCredential = 'alswn4516'
+        repository = "alswn4516/test"  //docker hub id와 repository 이름
+        DOCKERHUB_CREDENTIALS = credentials('docker_hub_user_credential') // jenkins에 등록해 놓은 docker hub credentials 이름
         dockerImage = ''
     }
     stages {
@@ -46,16 +46,13 @@ pipeline {
           }
         }
 
-        // docker build
-        stage('Bulid Docker') {
-                agent any
-                steps {
-                  echo 'Bulid Docker'
-                  script {
-                      dockerImage = docker.build imagename
-                  }
-                }
-                post {
+      stage('Building our image') {
+          steps {
+              script {
+                  dockerImage = docker.build repository + ":$BUILD_NUMBER"
+              }
+          }
+           post {
                  success {
                      echo 'Successfully Bulid Docker'
                  }
@@ -63,28 +60,21 @@ pipeline {
                     error 'This pipeline stops here...'
                   }
                 }
-              }
+      }
 
-              // docker push
-              stage('Push Docker') {
-                agent any
+       stage('Deploy our image') {
                 steps {
-                  echo 'Push Docker'
-                  script {
-                      docker.withRegistry( '', registryCredential) {
-                          dockerImage.push("1.0")  // ex) "1.0"
-                      }
-                  }
+                    script {
+                      sh 'docker push $repository:$BUILD_NUMBER' //docker push
+                    }
                 }
-                post {
-                                 success {
-                                     echo 'Successfully Push Docker'
-                                 }
-                  failure {
-                    error 'This pipeline stops here...'
-                  }
+            }
+            stage('Cleaning up') {
+      		  steps {
+                    sh "docker rmi $repository:$BUILD_NUMBER" // docker image 제거
                 }
-              }
+            }
+
 
 
     }
