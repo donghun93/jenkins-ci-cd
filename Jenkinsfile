@@ -50,20 +50,20 @@ pipeline {
 
         stage("Dockerize") {
             steps {
-                sh "$DOCKER build -t $repository ."
-                sh "echo $DOCKERHUB_CREDENTIALS_PSW | $DOCKER login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin" // docker hub 로그인
-                sh "$DOCKER push $repository"
-                sh "$DOCKER rmi $repository"
+                sh "docker build -t $repository ."
+                sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin" // docker hub 로그인
+                sh "docker push $repository"
+                sh "docker rmi $repository"
             }
         }
 
-//         stage("Deploy to EC2") {
+//          stage("Deploy to EC2") {
 //             steps {
-//                 sh "$SSH_CMD '$DOCKER pull $repository'"
-//                 sh "$SSH_CMD '$DOCKER stop test-container || true'"
-//                 sh "$SSH_CMD '$DOCKER rm test-container || true'"
-//                 sh "$SSH_CMD '$DOCKER run --name test-container -p 8080:8080 $repository'"
+//                   sh "$SSH_CMD 'docker pull $repository'"
+//                   sh "$SSH_CMD 'docker stop test-container || true'"
+//                   sh "$SSH_CMD 'docker rm test-container || true'"
+//                   sh "$SSH_CMD 'docker run --name test-container -p 8080:8080 $repository'"
 //             }
-//         }
+//          }
     }
 }
