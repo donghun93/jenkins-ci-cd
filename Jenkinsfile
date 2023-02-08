@@ -27,24 +27,30 @@ pipeline {
         }
 
         // gradle build
-        stage('Bulid Gradle') {
-          agent any
+//         stage('Bulid Gradle') {
+//           agent any
+//           steps {
+//             echo 'Bulid Gradle'
+//             dir ('.'){
+//                 sh "chmod +x gradlew"
+//                 sh """
+//                  ./gradlew clean build bootJar --exclude-task test
+//                 """
+//             }
+//           }
+//           post {
+//             success {
+//               echo 'Successfully Bulid Gradle'
+//             }
+//             failure {
+//               error 'This pipeline stops here...'
+//             }
+//           }
+//         }
+
+        stage('Gradle Build') {
           steps {
-            echo 'Bulid Gradle'
-            dir ('.'){
-                sh "chmod +x gradlew"
-                sh """
-                 ./gradlew clean build bootJar --exclude-task test
-                """
-            }
-          }
-          post {
-            success {
-              echo 'Successfully Bulid Gradle'
-            }
-            failure {
-              error 'This pipeline stops here...'
-            }
+            sh 'gradle clean build -x test -b build-server.gradle'
           }
         }
 
