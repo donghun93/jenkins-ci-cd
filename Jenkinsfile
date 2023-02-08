@@ -48,9 +48,9 @@ pipeline {
 
     stage("Dockerize") {
         steps {
-            sh "docker build -t test:$BUILD_NUMBER ."
-            sh "docker tag test:$BUILD_NUMBER alswn4516/test:$BUILD_NUMBER"
-            sh "docker push alswn4516/test:$BUILD_NUMBER"
+            sh "docker build -t alswn4516/test ."
+            sh "docker push alswn4516/test"
+            sh "docker rmi alswn4516/test"
         }
     }
 
