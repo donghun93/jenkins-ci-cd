@@ -37,6 +37,9 @@ pipeline {
             }
           }
           post {
+            success {
+              echo 'Successfully Bulid Gradle'
+            }
             failure {
               error 'This pipeline stops here...'
             }
@@ -44,7 +47,7 @@ pipeline {
         }
 
         // docker build
-              stage('Bulid Docker') {
+        stage('Bulid Docker') {
                 agent any
                 steps {
                   echo 'Bulid Docker'
@@ -53,6 +56,9 @@ pipeline {
                   }
                 }
                 post {
+                 success {
+                     echo 'Successfully Bulid Docker'
+                 }
                   failure {
                     error 'This pipeline stops here...'
                   }
@@ -71,6 +77,9 @@ pipeline {
                   }
                 }
                 post {
+                                 success {
+                                     echo 'Successfully Push Docker'
+                                 }
                   failure {
                     error 'This pipeline stops here...'
                   }
