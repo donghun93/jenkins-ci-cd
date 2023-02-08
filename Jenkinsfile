@@ -46,17 +46,13 @@ pipeline {
           }
         }
 
-    stage("Dockerize") {
-        steps {
-            sh "docker build -t alswn4516/test ."
-            sh "docker push alswn4516/test"
-            sh "docker rmi alswn4516/test"
+        stage("Dockerize") {
+            steps {
+                sh "docker build -t $repository ."
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin' // docker hub 로그인
+                sh "docker push $repository"
+                sh "docker rmi $repository"
+            }
         }
-    }
-
-
-
-
-
     }
 }
