@@ -10,7 +10,7 @@ pipeline {
         stage('chekcout') {
           steps {
             echo 'Clonning Repository'
-            git branch: 'main'
+            git branch: 'main',
                 url: 'https://github.com/donghun93/jenkins-ci-cd.git',
                 credentialsId: 'github_access_token_credential'
             }
