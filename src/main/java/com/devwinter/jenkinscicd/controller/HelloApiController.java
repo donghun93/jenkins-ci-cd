@@ -14,6 +14,6 @@ public class HelloApiController {
     public String hello() {
         // test hello
         log.info("hello");
-        return "hello";
+        return "hello WORLD";
     }
 }
