@@ -7,12 +7,11 @@ pipeline {
         dockerImage = ''
     }
     stages {
-        // git에서 repository clone
-        stage('Prepare') {
+        stage('chekcout') {
           steps {
             echo 'Clonning Repository'
-            git url: 'https://github.com/donghun93/jenkins-ci-cd.git',
-              branch: 'main'
+            git branch: 'main'
+                url: 'https://github.com/donghun93/jenkins-ci-cd.git',
             }
             post {
              success {
