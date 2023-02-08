@@ -5,7 +5,7 @@ pipeline {
         repository = "alswn4516/test"
         DOCKERHUB_CREDENTIALS = credentials('docker_hub_user_credential')
         dockerImage = ''
-        SSH_CMD = 'ssh -i jenkins.pem ubuntu@3.34.53.11'
+        SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/jenkins.pem ubuntu@3.34.53.11'
         DOCKER = 'sudo docker'
     }
     stages {
