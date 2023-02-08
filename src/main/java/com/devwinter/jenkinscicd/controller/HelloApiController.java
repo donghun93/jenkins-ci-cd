@@ -12,7 +12,7 @@ public class HelloApiController {
 
     @GetMapping
     public String hello() {
-        // test hello
+        // test hello1
         log.info("hello");
         return "hello";
     }
