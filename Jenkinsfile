@@ -50,10 +50,10 @@ pipeline {
 
         stage("Dockerize") {
             steps {
-                sh "$DOCKER build -t $repository ."
+                sh "docker build -t $repository ."
                 sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin" // docker hub 로그인
-                sh "$DOCKER push $repository"
-                sh "$DOCKER rmi $repository"
+                sh "docker push $repository"
+                sh "docker rmi $repository"
             }
         }
 
