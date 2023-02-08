@@ -46,34 +46,15 @@ pipeline {
           }
         }
 
-      stage('Building our image') {
-          steps {
-              script {
-                  dockerImage = docker.build repository + ":$BUILD_NUMBER"
-              }
-          }
-           post {
-                 success {
-                     echo 'Successfully Bulid Docker'
-                 }
-                  failure {
-                    error 'This pipeline stops here...'
-                  }
-                }
-      }
+    stage("Dockerize") {
+        steps {
+            sh "docker build -t test:$BUILD_NUMBER ."
+            sh "docker tag test:$BUILD_NUMBER alswn4516/test:$BUILD_NUMBER"
+            sh "docker push alswn4516/test:$BUILD_NUMBER"
+        }
+    }
 
-       stage('Deploy our image') {
-                steps {
-                    script {
-                      sh 'docker push $repository:$BUILD_NUMBER' //docker push
-                    }
-                }
-            }
-            stage('Cleaning up') {
-      		  steps {
-                    sh "docker rmi $repository:$BUILD_NUMBER" // docker image 제거
-                }
-            }
+
 
 
 
