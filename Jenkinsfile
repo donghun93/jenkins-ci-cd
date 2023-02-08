@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         repository = "alswn4516/test"  //docker hub id와 repository 이름
-        DOCKERHUB_CREDENTIALS = credentials('docker_hub_user_credential') // jenkins에 등록해 놓은 docker hub credentials 이름
+        DOCKERHUB_CREDENTIALS = credentials('docker_hub_user_credential2') // jenkins에 등록해 놓은 docker hub credentials 이름
         dockerImage = ''
     }
     stages {
