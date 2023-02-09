@@ -1,0 +1,2 @@
+app:
+  name: ${APP_NAME}

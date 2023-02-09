@@ -72,7 +72,7 @@ pipeline {
                   sh "$SSH_CMD 'docker pull $repository'"
                   sh "$SSH_CMD 'docker stop test-container || true'"
                   sh "$SSH_CMD 'docker rm test-container || true'"
-                  sh "$SSH_CMD 'docker run -d --name test-container -p 8080:8080 $repository'"
+                  sh "$SSH_CMD 'docker run -d --name test-container -p 8080:8080 --env-file=./env-var $repository'"
             }
          }
     }
