@@ -1,2 +1,2 @@
 app:
-  name: ${APP:NAME}
+  name: ${APP}
